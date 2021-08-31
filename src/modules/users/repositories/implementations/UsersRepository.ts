@@ -18,12 +18,7 @@ class UsersRepository implements IUsersRepository {
     return UsersRepository.INSTANCE;
   }
 
-  create({ name, email }: ICreateUserDTO): User {  
-
-    const user = this.findByEmail(email);
-    if (user){
-      throw new Error("User already registered!");
-    }
+  create({ name, email }: ICreateUserDTO): User {      
 
     const newuser = new User();
     Object.assign(newuser, {
@@ -46,7 +41,7 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  turnAdmin(receivedUser: User): User {
+  turnAdmin(receivedUser: User): User {    
     Object.assign(receivedUser,{
       admin: true,
       updated_at: new Date()

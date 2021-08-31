@@ -9,11 +9,11 @@ class User {
   created_at: Date;
   updated_at: Date;
   
-  constructor(){
-    this.id = uuidV4();
-    this.admin = false;
-    this.created_at = new Date();
-    this.updated_at = new Date();
+  constructor(){    
+      this.id = uuidV4();
+      this.admin = false;
+      this.created_at = new Date();
+      this.updated_at = new Date();
   }  
 }
 

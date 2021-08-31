@@ -10,8 +10,9 @@ class ListAllUsersUseCase {
 
   execute({ user_id }: IRequest): User[] {
     const user = this.usersRepository.findById(user_id);
+    
     if (!user){
-      throw new Error("User not found!");
+      throw new Error(`User not found! ${user_id}`);
     }
 
     if (!user.admin){
