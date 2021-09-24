@@ -1,0 +1,272 @@
+{
+  "openapi": "3.0.0",
+  "info":{
+    "title": " User api Documentation",
+    "description":" This is an USER api ",
+    "version": "1.0.0",
+    "contact":{
+      "email": "italo@nti.ufal.br"
+    }
+  },
+  "paths":{
+    "/users":{      
+      "post":{
+        "tags":["User"],
+        "summary": "Create a user",
+        "description": "Create a new user",
+        "requestBody":{
+          "content": {
+            "application/json":{
+              "schema":{
+                "type": "object",
+                "properties" : {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example":{
+                  "name": "User Test",
+                  "email": "email@example.com1"
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201":{
+            "description": "Created",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref": "#/definitions/Users"
+                },
+                "example":{
+                  "id": "20ed03c3-7f7f-4798-bb3d-f0288244a032",
+                  "admin": false,
+                  "created_at": "2021-09-24T18:47:09.739Z",
+                  "updated_at": "2021-09-24T18:47:09.739Z",
+                  "name": "User Test",
+                  "email": "email@example.com1"
+                }
+              }
+            }            
+          },
+          "400":{
+            "description": "User already registered",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref": "#/definitions/ErrorMessages"
+                },
+                "example":{
+                  "error": "User already registered!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags":["User"],
+        "summary": "List all  Users",
+        "description": "List all Users", 
+        "parameters":[
+          {  
+            "in": "header",
+            "name":"user_id",
+            "required":true,
+            "schema":{
+              "type":"string"              
+            }
+          }
+        ],       
+        "responses":{
+          "200":{
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"array",
+                  "items":{
+                    "$ref": "#/definitions/Users"                    
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "description": "User is not admin",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref": "#/definitions/ErrorMessages"
+                },
+                "example":{
+                  "error": "User is not admin!"
+                }
+              }
+            }
+          }
+        }
+        
+      }
+      
+    },
+    "/users/{user_id}":{      
+      "get":{
+        "tags":["User"],
+        "summary": "Get user's profile",
+        "parameters":[
+          {  
+            "in": "path",
+            "name":"user_id",
+            "required":true,
+            "schema":{
+              "type":"string"              
+            }
+          }
+        ],
+        "description":"The user id",
+        "responses":{
+          "200":{
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref": "#/definitions/Users"
+                },
+                "example":{
+                  "id": "20ed03c3-7f7f-4798-bb3d-f0288244a032",
+                  "admin": false,
+                  "created_at": "2021-09-24T18:47:09.739Z",
+                  "updated_at": "2021-09-24T18:47:09.739Z",
+                  "name": "User Test",
+                  "email": "email@example.com1"
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "User not found!",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref": "#/definitions/ErrorMessages"
+                },
+                "example":{
+                  "error": "User not found!"
+                }
+              }
+            }        
+          }
+        }        
+      }
+    },
+    "/users/{user_id}/admin":{
+      "patch":{
+        "tags": ["User"],
+        "summary": "Turns user in admin",
+        "parameters":[
+          {  
+            "in": "path",
+            "name":"user_id",
+            "required":true,
+            "schema":{
+              "type":"string"              
+            }
+          }
+        ],
+        "responses":{
+          "200":{
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object",
+                  "properties":{
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "admin":{
+                      "type":"boolean"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format":"date"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format":"date"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "User already admin or User not found!",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref": "#/definitions/ErrorMessages"
+                },
+                "example":{
+                  "error": "User already admin!"
+                }
+              }
+            } 
+          }
+        }
+        
+      }
+    }
+  },
+  "definitions":{
+    "ErrorMessages":{
+      "type": "object",
+      "properties":{
+        "message":{
+          "type": "string"
+        }
+      }
+    },
+    "Users":{
+      "type": "object",
+      "properties" : {
+        "id": {
+          "type": "string"
+         },
+        "name": {
+          "type": "string"
+         },
+        "email": {
+          "type": "string"
+        },
+        "created_at":{
+          "type": "string",
+          "format":"date"
+        },
+        "updated_at":{
+          "type": "string",
+          "format":"date"
+        },
+        "admin":{ 
+          "type":"boolean",
+          "default": "false"
+        }
+      }      
+    }
+  }
+}
+
+  
