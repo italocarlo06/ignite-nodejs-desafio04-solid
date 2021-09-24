@@ -185,30 +185,15 @@
             "content":{
               "application/json":{
                 "schema":{
-                  "type":"object",
-                  "properties":{
-                    "id": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "admin":{
-                      "type":"boolean"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format":"date"
-                    },
-                    "updated_at": {
-                      "type": "string",
-                      "format":"date"
-                    }
-                  }
+                  "$ref": "#/definitions/Users"                
+                },
+                "example":{
+                  "id": "20ed03c3-7f7f-4798-bb3d-f0288244a032",
+                  "admin": true,
+                  "created_at": "2021-09-24T18:47:09.739Z",
+                  "updated_at": "2021-09-24T18:47:09.739Z",
+                  "name": "User Test",
+                  "email": "email@example.com1"
                 }
               }
             }
